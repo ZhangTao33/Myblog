@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>关于作者</title>
+    <link rel="stylesheet" href="../../css/element.css">
+    <link rel="stylesheet" href="../../css/base.css">
+
+    <style>
+        body {
+            background-color: #f0f9eb;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper" v-cloak>
+    <el-container>
+        <el-header style="background: #292828">
+            <el-row style="height: 100%;" type="flex" justify="center" align="middle">
+                <el-col :span="5">
+                    <div style="color: white; text-align: center; font-size: 24px;">
+                        Valiant
+                    </div>
+                </el-col>
+                <el-col :span="16">
+                    <el-menu
+                            :default-active="src"
+                            mode="horizontal"
+                            @select="handleSelect"
+                            class="el-menu-demo"
+                            background-color="#292828"
+                            text-color="#fff"
+                            active-text-color="#ffd04b"
+                    >
+                        <el-menu-item index="index.html">博客首页</el-menu-item>
+                        <el-menu-item index="blog.html">技术博文</el-menu-item>
+                        <el-menu-item index="resource.html">资源站点</el-menu-item>
+                        <el-menu-item index="message.html">留言反馈</el-menu-item>
+                        <el-menu-item index="author.html">关于作者</el-menu-item>
+                    </el-menu>
+                </el-col>
+                <el-col :span="4">
+                    <div v-if="user.id">
+                        <span style="color: white">欢迎您：{{user.username}}&nbsp;&nbsp;</span>
+                        <el-button size="mini" @click="logout">退出</el-button>
+                    </div>
+                    <div v-else>
+                        <a href="/page/end/login.html">
+                            <el-button size="mini" type="primary">登录</el-button>
+                        </a>
+                        <a href="/page/end/register.html">
+                            <el-button size="mini">注册</el-button>
+                        </a>
+                    </div>
+                </el-col>
+            </el-row>
+        </el-header>
+        <el-main>
+            <el-row type="flex" justify="center" :gutter="20">
+                <el-col :span="16">
+                    <div>
+                        <el-card>
+                            <div style="text-align: center">
+                                <div style="font-size: 22px;">博主信息</div>
+                            </div>
+                            <!--                    分割线-->
+                            <div style="height: 1px; margin: 10px 0; background-color: #ccc"></div>
+
+                            <div style="padding: 20px; color: #888" id="view-notice-body">
+                            </div>
+                            <div style="text-align: center">
+                                <el-row>
+                                    <el-button type="success" @click="changeClick()" round>点赞（{{author.click}}）</el-button>
+                                </el-row>
+                            </div>
+                        </el-card>
+
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div>
+                        <el-card style="background-color: #4e4e4e; color: #e3e3e3">
+                            <div style="border-bottom: 1px solid orangered; padding-bottom: 10px; font-size: 20px">博主简介</div>
+                            <div>
+                                <div style="color: #f0f8ff; margin: 10px 0; font-size: 14px">
+                                    <i class="el-icon-s-custom"></i>
+                                    <span>职业：Java开发学习者</span>
+                                </div>
+                                <div style="color: #f0f8ff; margin: 10px 0; font-size: 14px">
+                                    <i class="el-icon-map-location"></i>
+                                    <span>地址：天津市西青区</span>
+                                </div>
+                                <div style="color: #f0f8ff; margin: 10px 0; font-size: 14px">
+                                    <i class="el-icon-medal"></i>
+                                    <span>微信号：Valiant-3</span>
+                                </div>
+                                <div style="color: #f0f8ff; margin: 10px 0; font-size: 14px">
+                                    <i class="el-icon-trophy"></i>
+                                    <span>B站：夏天不喜欢吃冰淇淋</span>
+                                </div>
+                                <div style="color: #f0f8ff; margin: 10px 0; font-size: 14px">
+                                    <i class="el-icon-message"></i>
+                                    <span>e-mail：862814270@qq.com</span>
+                                </div>
+                                <div style="margin-top: 20px;">
+                                    <span>
+                                        <a href="javascript:void(0)" @mouseleave="hideImg('wxImg')"  @mouseover="showImg('wxImg')">
+                                            <img style="width:20%; border-radius: 50%" src="/images/wx.jpg" alt="">
+                                        </a>
+                                        <div id="wxImg" style="display:none;height:50px;back-ground:#f00;position:absolute; margin-left: -35px">
+                                            <img style="width:50%; border-radius: 5px" src="/images/Valiant-3_WX.jpg" alt="">
+                                        </div>
+                                    </span>
+                                    <span>
+                                        <a href="javascript:void(0)" @mouseleave="hideImg('qqImg')"  @mouseover="showImg('qqImg')">
+                                            <img style="width:20%; border-radius: 50%" src="/images/wx.jpg" alt="">
+                                        </a>
+                                        <div id="qqImg" style="display:none;height:50px;back-ground:#f00;position:absolute; margin-left: 35px">
+                                            <img style="width:50%; border-radius: 5px" src="/images/Valiant-3_WX.jpg" alt="">
+                                        </div>
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </el-card>
+                    </div>
+
+                    <div style="margin: 20px 0">
+                        <el-card>
+                            <div style="border-bottom: 1px solid gray; padding-bottom: 10px; font-size: 20px">标签分类</div>
+                            <div style="margin-top: 10px">
+                                <a :href="'http://localhost:8888/page/front/blog.html?tag=' + item.name" v-for="item in tags">
+                                    <el-tag style="margin: 5px">{{item.name}}</el-tag>
+                                </a>
+                            </div>
+                        </el-card>
+                    </div>
+                </el-col>
+            </el-row>
+
+        </el-main>
+
+        <el-footer style="text-align: center; height:100px; width:100%; bottom: 0; color:white; background: #2A3746">
+            <p style="margin-top: 10px">
+                Valiant-3 ©2021 个人博客平台
+            </p>
+            <p style="margin-top: 10px">
+                <span>座右铭</span>
+            </p>
+            <p style="margin-top: 10px">
+                <span>日拱一卒，功不唐捐</span>
+            </p>
+
+        </el-footer>
+    </el-container>
+</div>
+
+<!--    js-->
+<script src="../../js/jquery.min.js"></script>
+
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/element.js"></script>
+
+<script>
+    let urlBase = "/api/author/";
+    new Vue({
+        el: "#wrapper",
+        data: {
+            src: 'author.html',
+            search: '',
+            author: {click: 0},
+            pageNum: 1,
+            pageSize: 6,
+            total: 0,
+            user: {},
+            tags: [],
+            dialogVisible: false
+        },
+        created() {
+            $.ajax({url: '/api/user/session', method: "GET", async: false, success: (res) => {this.user = res.data || {}}});
+            $.get("/api/tag").then(res => {
+                this.tags = res.data;
+            });
+
+            this.loadAuthor();
+        },
+        methods: {
+            handleSelect(key) {
+                location.href = key;
+                // window.setInterval("reinitIframe()", 50);
+            },
+            sign(obj) {
+
+            },
+            logout() {
+                $.get("/api/user/logout");
+                sessionStorage.removeItem("user");
+                location.href = "/page/front/index.html";
+            },
+            loadAuthor() {
+                $.get(urlBase ).then(res => {
+                    let result = res.data;
+                    if (result.length === 0) {
+                        this.author = {click: 0}
+                    } else {
+                        this.entity = res.data[0];
+                        $('#view-notice-body').html(res.data[0].content);
+                    }
+                })
+            },
+            changeClick() {
+                this.author.click = this.author.click + 1;
+                $.ajax({
+                    url: urlBase,
+                    type: 'PUT',
+                    contentType: "application/json",
+                    data: JSON.stringify(this.author)
+                }).then(res => {
+                    if (res.code === '0') {
+                        this.$message({
+                            message: "点赞成功",
+                            type: "success"
+                        });
+                    } else {
+                        this.$message({
+                            message: res.msg,
+                            type: "error"
+                        })
+                    }
+                })
+            },
+            showImg(id) {
+                document.getElementById(id).style.display='block';
+            },
+            hideImg(id) {
+                document.getElementById(id).style.display='none';
+            },
+
+        }
+    });
+
+</script>
+</body>
+</html>

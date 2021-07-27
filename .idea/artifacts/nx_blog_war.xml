@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="nx-blog:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>nx-blog</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="nx-blog-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="nx-blog:war exploded" />
+    </root>
+  </artifact>
+</component>
